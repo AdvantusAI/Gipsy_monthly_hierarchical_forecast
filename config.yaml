@@ -1,0 +1,35 @@
+forecast_start_date: "2025-03-03"   # must be a Monday
+forecast_horizon: 12
+gpu: true
+
+seasonality:
+  fourier_yearly_order: 6
+  fourier_halfyear_order: 3
+  add_month_dummies: true
+
+holidays:
+  country_code: "MX"
+  add_school_holidays: true
+  extra_holidays:
+    - "2025-02-17"
+    - "2025-11-28"
+
+exogenous:
+  enabled: true
+  vars: ["unit_price"]
+  lags: [1, 2, 4]
+  transforms:
+    unit_price: [4]
+
+importance:
+  compute: true
+  top_n: 25
+  types: ["gain", "split"]
+
+reconciliation_method: "MinTrace"
+shrinkage: true
+
+evaluation:
+  test_horizon: 26
+  rolling_step: 4
+  min_history_weeks: 26
